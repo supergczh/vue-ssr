@@ -9,8 +9,17 @@ const isDev = process.env.NODE_ENV === 'development'
 
 let config
 
+const  definePlugins=[
+  new webpack.DefinePlugin({
+      'process.env':{
+          NODE_ENV: isDev ? '"development"' : '"production"'
+      }
+  }),
+  new HTMLPlugin()
+]
+
 const devServer={
-  port: 8112,
+  port: 8122,
   host: '0.0.0.0',
   overlay: {
      errors:true
@@ -21,7 +30,7 @@ const devServer={
 
 if(isDev) {  //开发环境
    config=merge(baseConfig,{
-     devtool = '#cheap-module-eval-source-map',
+     devtool:'#cheap-module-eval-source-map',
      module:{
        rules:[
           {
@@ -41,17 +50,17 @@ if(isDev) {  //开发环境
        ]
      },
      devServer,
-     plugins:[
+     plugins:definePlugins.concat([
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
-     ]
+     ])
    })
     
   
 }else{
-  config.merge(baseConfig,{
+  config=merge(baseConfig,{
         entry :{
-          app: path.join(__dirname, 'src/index.js'),
+          app: path.join(__dirname, '../client/index.js'),
           vendor: ['vue']
       },
       output:{
@@ -77,7 +86,7 @@ if(isDev) {  //开发环境
         }
         ]
       },
-      plugins:[
+      plugins:definePlugins.concat([
         new ExtractPlugin('styles.[contentHash:8].css'),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor'
@@ -85,7 +94,7 @@ if(isDev) {  //开发环境
         new webpack.optimize.CommonsChunkPlugin({
             name: 'runtime'
         })
-      ]
+      ])
        
   })  
 }

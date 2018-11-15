@@ -7,9 +7,9 @@
    </div>
 </template>
 <script>
-import Header from './todo/header.vue'
-import Footer from './todo/footer.jsx'
-import todo from './todo/todo.vue'
+import Header from './layout/header.vue'
+import Footer from './layout/footer.jsx'
+import todo from './views/tudo/todo.vue'
 export default {
    components: {
        Header,
