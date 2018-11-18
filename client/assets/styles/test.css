@@ -1,1 +1,4 @@
-body{color: red;background: url(../images/bitian.png) no-repeat; }
+body {
+  color: red;
+  background-image: url('../images/done.svg')
+}
